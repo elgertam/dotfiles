@@ -18,16 +18,16 @@ export PS1=${venv_prompt}${git_prompt}${main_prompt}
 
 set -o vi
 
-#. /usr/local/bin/virtualenvwrapper.sh
-
 alias ll='ls -lAG'
 alias ls='ls -G'
 export SVN_EDITOR=vim
 export EDITOR=vim
 export WORKON_HOME=~/.virtualenvs
-
-export PATH="/Applications/Postgres.app/Contents/Versions/9.4/bin:$HOME/Library/Haskell/bin:/usr/local/heroku/bin:/usr/local/sbin:$PATH"
+export NVM_DIR=~/.nvm
+. $(brew --prefix nvm)/nvm.sh
 
 if [ -f `brew --prefix`/etc/bash_completion ]; then
     . `brew --prefix`/etc/bash_completion
 fi
+
+
