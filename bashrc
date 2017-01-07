@@ -1,11 +1,23 @@
+if $(python -c "import os; exit(0) if '/usr/local/bin' in os.environ.get('PATH') else exit(1)") ; then
+    true;
+else
+    export PATH="/usr/local/bin:$PATH"
+fi
+
 if ! shopt -q login_shell; then
     . /etc/bashrc
 fi
 
 __venv_ps1() {
-    if [ $VIRTUAL_ENV ]; then
-        venv_name=$(basename $VIRTUAL_ENV)
-        printf "$1" $venv_name
+    if [ "$VIRTUAL_ENV" ]; then
+        venv_name="$(basename $VIRTUAL_ENV)"
+        if [ "$venv_name" = 'env' \
+             -o "$venv_name" = '.env' \
+             -o "$venv_name" = 'venv' \
+             -o "$venv_name" = '.venv' ]; then
+            venv_name="$(basename "$(dirname $VIRTUAL_ENV)")"
+        fi
+        printf "$1" "$venv_name"
     else
         printf ''
     fi
@@ -24,10 +36,9 @@ export SVN_EDITOR=vim
 export EDITOR=vim
 export WORKON_HOME=~/.virtualenvs
 export NVM_DIR=~/.nvm
-. $(brew --prefix nvm)/nvm.sh
+. "$(brew --prefix nvm)"/nvm.sh
 
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
+if [ -f "$(brew --prefix)"/etc/bash_completion ]; then
+    . "$(brew --prefix)"/etc/bash_completion
 fi
-
 
