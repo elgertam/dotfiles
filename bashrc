@@ -9,7 +9,10 @@ if ! shopt -q login_shell; then
 fi
 
 __venv_ps1() {
-    if [ "$VIRTUAL_ENV" ]; then
+    if python -c 'import sys; exit(0) \
+                  if hasattr(sys, "real_prefix") \
+                    or (getattr(sys, "base_prefix", object()) != getattr(sys, "prefix", object())) \
+                  else exit(1)'; then
         venv_name="$(basename $VIRTUAL_ENV)"
         if [ "$venv_name" = 'env' \
              -o "$venv_name" = '.env' \
@@ -28,14 +31,18 @@ venv_prompt='\[\033[0;33m\]$(__venv_ps1 "(v:%s) ")\[\033[0m\]'
 main_prompt="\[\033[0;34m\]$PS1\[\033[0m\]"
 export PS1=${venv_prompt}${git_prompt}${main_prompt}
 
+export CLASSPATH=".:/usr/local/lib/antlr-4.6-complete.jar:$CLASSPATH"
+
 set -o vi
 
 alias ll='ls -lAG'
 alias ls='ls -G'
+alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.6-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
+alias grun='java org.antlr.v4.gui.TestRig'
 export SVN_EDITOR=vim
 export EDITOR=vim
-export WORKON_HOME=~/.virtualenvs
 export NVM_DIR=~/.nvm
+export PIPENV_VENV_IN_PROJECT=1
 . "$(brew --prefix nvm)"/nvm.sh
 
 if [ -f "$(brew --prefix)"/etc/bash_completion ]; then
