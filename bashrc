@@ -9,9 +9,10 @@ if ! shopt -q login_shell; then
 fi
 
 __venv_ps1() {
-    if python -c 'import sys; exit(0) \
-                  if hasattr(sys, "real_prefix") \
-                    or (getattr(sys, "base_prefix", object()) != getattr(sys, "prefix", object())) \
+    if python -c 'import sys; import platform; version = platform.python_version(); exit(0) \
+                  if (hasattr(sys, "real_prefix") and version.startswith("2")) \
+                    or (getattr(sys, "base_prefix", object()) != getattr(sys, "prefix", object()) \
+                      and version.startswith("3")) \
                   else exit(1)'; then
         venv_name="$(basename $VIRTUAL_ENV)"
         if [ "$venv_name" = 'env' \
