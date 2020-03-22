@@ -2,11 +2,15 @@
 
 export PATH="/usr/local/sbin:$PATH"
 
-if which pyenv > /dev/null; then
-  eval "$(pyenv init -)";
+if which direnv > /dev/null; then
+    eval "$(direnv hook bash)"
 fi
 
-export PATH="$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+if which anyenv > /dev/null; then
+  eval "$(anyenv init -)";
+fi
+
+export PATH="$HOME/.poetry/bin:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$HOME/.local/bin:$PATH"
 
 . ~/.bashrc
 

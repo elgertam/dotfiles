@@ -17,7 +17,7 @@ if (real_prefix and version.startswith("2")) or ((base_prefix != prefix) and ver
     print("succeeded", version, real_prefix, base_prefix, prefix)
     exit(0)
 else:
-    print("failed", version, real_prefix, base_prefix, prefix, base_prefix == prefix)
+    print("failed v:{} rp:{} bp:{} p:{} eq?:{}".format(version, real_prefix, base_prefix, prefix, base_prefix == prefix))
     exit(1)
 EOF 
 )
@@ -48,15 +48,17 @@ alias ll='ls -lAG'
 alias ls='ls -G'
 # alias grun='java org.antlr.v4.gui.TestRig'
 export SVN_EDITOR=vim
+export GIT_EDITOR=vim
 export EDITOR=vim
-export NVM_DIR="$HOME/.nvm"
 export PIPENV_VENV_IN_PROJECT=1
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 if [ -f "$(brew --prefix)"/etc/bash_completion ]; then
     . "$(brew --prefix)"/etc/bash_completion
 fi
 
 eval $(thefuck --alias)
+
+
+# added by travis gem
+[ -f /Users/ame/.travis/travis.sh ] && source /Users/ame/.travis/travis.sh
 
