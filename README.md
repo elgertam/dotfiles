@@ -2,13 +2,13 @@
 
 ## Setup
 
-Git clone or download this repository into ~/.dotfiles, e.g.
+Git clone or download this repository into `~/.dotfiles`, e.g.
 
 ```sh
 git clone https://github.com/elgertam/dotfiles ~/.dotfiles
 ```
 
-Ensure that the script files in `.dotfiles` are executable:
+Ensure that the script files in `~/.dotfiles` are executable:
 
 ```sh
 chmod u+x ~/.dotfiles/*.sh
@@ -16,7 +16,7 @@ chmod u+x ~/.dotfiles/*.sh
 
 ## Install
 
-From `~/.dotfiles`, run `./reload.sh`, which will bootstrap your system with Nix, nix-darwin and home-manager and then will set up your system using `flake.nix`.
+Run `./reload.sh` from `~/.dotfiles`, which will bootstrap your system with Nix, nix-darwin and home-manager and then will set up your system using `flake.nix`.
 
 ## Updating
 
