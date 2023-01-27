@@ -2,35 +2,111 @@
   description = "AME's darwin system";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
-    nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixos-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
 
     darwin.url = "github:lnl7/nix-darwin";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
+    darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, darwin, home-manager, ... }@inputs:
   let
     inherit (darwin.lib) darwinSystem;
 
-    configuration = { pkgs, ... }: {
-      nix.package = pkgs.nixVersions.stable;
+    nixpkgs = inputs.nixpkgs-unstable;
 
-      programs.zsh.enable = true;
-      programs.zsh.enableCompletion = true;
+    configuration = { pkgs, lib, ... }: {
+
+      environment.systemPackages = with pkgs; [ ];
 
       fonts.fontDir.enable = true;
       fonts.fonts = with pkgs; [
         fira-code
+        powerline-fonts
       ];
 
-      services.nix-daemon.enable = true;
+      homebrew.enable = true;
+      homebrew.global.brewfile = true;
 
-      environment.systemPackages = with pkgs; [ ];
+      homebrew.taps = [
+        "homebrew/core"
+        "homebrew/cask"
+      ];
+
+      homebrew.casks = [
+        "1password"
+        "appcleaner"
+        "bartender"
+        "blockblock"
+        "brave-browser"
+        "chromium"
+        "dash"
+        "db-browser-for-sqlite"
+        "detectx-swift"
+        "dhs"
+        "docker"
+        "dropbox"
+        "firefox"
+        "fork"
+        "gimp"
+        "hammerspoon"
+        "inkscape"
+        "ipfs"
+        "jupyter-notebook-ql"
+        "kdiff3"
+        "keepingyouawake"
+        "knockknock"
+        "lulu"
+        "macs-fan-control"
+        "macsvg"
+        "basictex"
+        "meld"
+        "netiquette"
+        "ngrok"
+        "pandora"
+        "postman"
+        "ql-ansilove"
+        "qlcolorcode"
+        "qlimagesize"
+        "qlmarkdown"
+        "qlrest"
+        "qlstephen"
+        "quicklook-csv"
+        "quicklook-json"
+        "reikey"
+        "selfcontrol"
+        "slack"
+        "stats"
+        "suspicious-package"
+        "taskexplorer"
+        "the-unarchiver"
+        "visual-studio-code"
+        "whatsyoursign"
+        "xquartz"
+        "zoom"
+      ];
+
+      nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+
+      nix.package = pkgs.nixVersions.stable;
+
+      nix.settings = {
+        auto-optimise-store = true;
+        experimental-features = [ "nix-command" "flakes" ];
+        extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [ "x86_64-darwin" "aarch64-darwin"];
+      };
+
+      # needed to enable Zsh system-side including in /etc
+      programs.zsh.enable = true;
+
       security.pam.enableSudoTouchIdAuth = true;
+
+      services.nix-daemon.enable = true;
 
       system.defaults.dock = {
         autohide = true;
@@ -49,8 +125,20 @@
       };
     };
 
+    nixpkgsConfig = {
+      overlays = builtins.attrValues self.overlays;
+    };
+
     home-configuration = { config, pkgs, lib, ... }: {
-      home.stateVersion = "22.11";
+      home.stateVersion = "23.05";
+
+      home.packages = with pkgs; [
+        coreutils man git jq vim bat tmux tree direnv htop silver-searcher
+        curl wget
+        ruby python310 nodejs
+        poetry yarn nodePackages.npm
+        rnix-lsp nix-index
+      ];
 
       home.sessionPath = [
         "$HOME/.local/bin"
@@ -70,17 +158,21 @@
         now = "date +%Y%m%d%H%M%S";
       };
 
+      nix.settings = {
+        experimental-features = [ "nix-command" "flakes" ];
+      };
+
+      nixpkgs.config = { allowUnfree = true; };
+
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;
       programs.direnv.enableZshIntegration = true;
 
-      programs.zsh.enable = true;
+      programs.nix-index.enable = true;
+      programs.nix-index.enableZshIntegration = true;
 
-      # programs.zsh.initExtraFirst = ''
-      # if which anyenv > /dev/null; then
-      #   eval "$(anyenv init - zsh)";
-      # fi
-      # '';
+      programs.zsh.enable = true;
+      programs.zsh.enableCompletion = true;
 
       programs.zsh.initExtra = ''
       prompt_dir() {
@@ -132,30 +224,14 @@
       programs.zsh.oh-my-zsh.enable = true;
       programs.zsh.oh-my-zsh.plugins = [ "git-prompt" ];
       programs.zsh.oh-my-zsh.theme = "agnoster";
-
-      # programs.htop.enable = true;
-      # programs.htop.settings.show_program_path = true;
-
-      home.packages = with pkgs; [
-        coreutils man git jq vim bat tmux tree direnv htop silver-searcher
-        curl wget
-        ruby python310 nodejs
-        poetry yarn nodePackages.npm
-        rnix-lsp
-      ];
     };
 
-    nixpkgsConfig = {
-      config = { allowUnfree = true; };
-      overlays = builtins.attrValues self.overlays;
-    };
   in
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake ./modules/examples#simple \
     #       --override-input darwin .
     darwinConfigurations.laforge = darwinSystem {
-      # modules = [ configuration darwin.darwinModules.simple ];
       modules = builtins.attrValues self.darwinModules ++ [
         configuration
         home-manager.darwinModules.home-manager
@@ -185,95 +261,9 @@
     # Expose the package set, including overlays, for convenience.
     darwinPackages = self.darwinConfigurations.laforge.pkgs;
 
-    darwinModules = {
-      programs-nix-index =
-        # Additional configuration for `nix-index` to enable `command-not-found` functionality with Fish.
-        { config, lib, pkgs, ... }:
+    darwinModules = { };
 
-        {
-          config = lib.mkIf config.programs.nix-index.enable {
-            programs.fish.interactiveShellInit = ''
-              function __fish_command_not_found_handler --on-event="fish_command_not_found"
-                ${if config.programs.fish.useBabelfish then ''
-                command_not_found_handle $argv
-                '' else ''
-                ${pkgs.bashInteractive}/bin/bash -c \
-                  "source ${config.programs.nix-index.package}/etc/profile.d/command-not-found.sh; command_not_found_handle $argv"
-                ''}
-              end
-            '';
-            };
-        };
-
-      ame-homebrew =
-        {config, lib, ...}:
-        {
-          homebrew.enable = true;
-          # onActivation.cleanup = "zap";
-          homebrew.global.brewfile = true;
-
-          homebrew.taps = [
-            "homebrew/core"
-            "homebrew/cask"
-            # "homebrew/cask-fonts"
-          ];
-
-          homebrew.casks = [
-            "1password"
-            "appcleaner"
-            "bartender"
-            "blockblock"
-            "brave-browser"
-            "chromium"
-            "dash"
-            "db-browser-for-sqlite"
-            "detectx-swift"
-            "dhs"
-            "docker"
-            "dropbox"
-            "firefox"
-            "fork"
-            "gimp"
-            "hammerspoon"
-            "inkscape"
-            "ipfs"
-            "jupyter-notebook-ql"
-            "kdiff3"
-            "keepingyouawake"
-            "knockknock"
-            "lulu"
-            "macs-fan-control"
-            "macsvg"
-            "basictex"
-            "meld"
-            "netiquette"
-            "ngrok"
-            "pandora"
-            "postman"
-            "ql-ansilove"
-            "qlcolorcode"
-            "qlimagesize"
-            "qlmarkdown"
-            "qlrest"
-            "qlstephen"
-            "quicklook-csv"
-            "quicklook-json"
-            "reikey"
-            "selfcontrol"
-            "slack"
-            "stats"
-            "suspicious-package"
-            "taskexplorer"
-            "the-unarchiver"
-            "visual-studio-code"
-            "whatsyoursign"
-            "xquartz"
-            "zoom"
-          ];
-        };
-    };
-
-    overlays = {};
+    overlays = { };
 
   };
 }
