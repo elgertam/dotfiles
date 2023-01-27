@@ -55,4 +55,14 @@ run_installation() {
   fi
 }
 
+legacy_install() {
+  if [ ! -h "$HOME/.vimrc" ]; then
+    ln -s "$(pwd)/vimrc" ~/.vimrc
+  fi
+  if [ ! -h "$HOME/.tmux.conf" ]; then
+    ln -s "$(pwd)/tmux.conf" ~/.tmux.conf
+  fi
+}
+
 run_installation
+legacy_install

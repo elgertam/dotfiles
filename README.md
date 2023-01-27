@@ -38,6 +38,18 @@ If you'd like to uninstall, run `/nix/nix-installer uninstall`. You may need to 
 
 You may run into various errors relating to files that already exist on the disk. If you see them, follow the included instructions and try the command again. Nix tends to be highly repeatable build system, so the chances of blowing your whole system up are small.
 
+## TODO
+
+Move vimrc & tmux.conf into the flake
+
+## Further References
+
+- Zero to Nix <https://zero-to-nix.com>
+- Nix Pills <https://nixos.org/guides/nix-pills/>
+- Intro to the Nix language, derivations and nixpkgs (video) <https://www.youtube.com/watch?v=9DJtHIpdp0Y>
+- home-manager options <https://nix-community.github.io/home-manager/options.html>
+- nix-darwin options <https://daiderd.com/nix-darwin/manual/index.html#sec-options>
+
 ## Acknowledgements
 
 Inspired by <https://github.com/ameske/.dot_files>
