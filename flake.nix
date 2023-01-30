@@ -67,7 +67,6 @@
         "basictex"
         "meld"
         "netiquette"
-        "ngrok"
         "pandora"
         "postman"
         "ql-ansilove"
@@ -139,8 +138,9 @@
         coreutils man git jq vim bat tmux tree direnv htop silver-searcher
         curl wget
         ruby python310 nodejs
-        poetry yarn nodePackages.npm
-        rnix-lsp nix-index rustup
+        poetry yarn nodePackages.npm rustup
+        rnix-lsp nix-index
+        ngrok
       ];
 
       home.sessionPath = [
