@@ -101,6 +101,8 @@
         extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [ "x86_64-darwin" "aarch64-darwin"];
       };
 
+      nixpkgs.config = { allowUnfree = true; };
+
       # needed to enable Zsh system-side including in /etc
       programs.zsh.enable = true;
 
@@ -126,6 +128,7 @@
     };
 
     nixpkgsConfig = {
+      config.allowUnfree = true;
       overlays = builtins.attrValues self.overlays;
     };
 
@@ -137,7 +140,7 @@
         curl wget
         ruby python310 nodejs
         poetry yarn nodePackages.npm
-        rnix-lsp nix-index
+        rnix-lsp nix-index rustup
       ];
 
       home.sessionPath = [
@@ -236,7 +239,8 @@
         configuration
         home-manager.darwinModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
+          nixpkgs = nixpkgsConfig;
+          # home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.ame = home-configuration;
         }
@@ -250,7 +254,7 @@
         home-manager.darwinModules.home-manager
         {
           nixpkgs = nixpkgsConfig;
-          home-manager.useGlobalPkgs = true;
+          # home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.ame = home-configuration;
         }

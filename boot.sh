@@ -3,14 +3,15 @@
 install_nix() {
   if [ ! -d /nix/ ]; then
     echo Installing from Determinate Systems installer
-    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install darwin-multi --encrypt true --logger pretty
     echo Done installing Nix
   else
     echo Nix is already installed.
   fi
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 }
 
-boostrap_nix_darwin() {
+bootstrap_nix_darwin() {
   if [ -f /etc/synthetic.conf ]; then
     sudo cp /etc/synthetic.conf /etc/synthetic.conf.before-nix-darwin
     if grep '^run\tprivate/var/run$' /etc/synthetic.conf > /dev/null; then
@@ -26,14 +27,22 @@ boostrap_nix_darwin() {
 
   echo 'Building system flake.'
 
-  nix build .\#darwinConfigurations.$(hostname -s).system
+  nix --extra-experimental-features nix-command --extra-experimental-features flakes build .\#darwinConfigurations.$(hostname -s).system
 
   sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
   sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
   sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
+  mv "$HOME"/.zshrc "$HOME"/.zshrc.before-nix-darwin
 
+  if [ -f "$HOME"/.config/nix/nix.conf ]; then
+    mv "$HOME"/.config/nix/nix.conf "$HOME"/.config/nix/nix.conf.before-nix-darwin
+  fi
   if [ -f /etc/zshenv ]; then
     sudo mv /etc/zshenv /etc/zshenv.before-nix-darwin
+  fi
+
+  if [ -f "$HOME"/.zshenv ]; then
+    sudo mv "$HOME"/.zshenv "$HOME"/.zshenv.before-nix-darwin
   fi
 
   echo 'Bootstrapping system.'
@@ -51,7 +60,7 @@ run_installation() {
   else
     install_nix
     bootstrap_nix_darwin
-    cleanup_boostrap
+    cleanup_bootstrap
   fi
 }
 
