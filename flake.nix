@@ -38,6 +38,8 @@
         "homebrew/cask"
       ];
 
+      homebrew.caskArgs.no_quarantine = true;
+
       homebrew.casks = [
         "1password"
         "appcleaner"
@@ -118,6 +120,8 @@
         InitialKeyRepeat = 35;
         KeyRepeat = 2;
         ApplePressAndHoldEnabled = false;
+        "com.apple.swipescrolldirection" = false;
+        "com.apple.mouse.tapBehavior" = 1;
       };
 
       system.defaults.trackpad = {
@@ -171,6 +175,10 @@
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;
       programs.direnv.enableZshIntegration = true;
+
+      programs.git.enable = true;
+      programs.git.userEmail = "andrew.elgert@gmail.com";
+      programs.git.userName = "Andrew Mark Elgert";
 
       programs.nix-index.enable = true;
       programs.nix-index.enableZshIntegration = true;
@@ -249,7 +257,7 @@
       system = "x86_64-darwin";
     };
 
-    darwinConfigurations.sulu = darwinSystem {
+    darwinConfigurations.riker = darwinSystem {
       modules = builtins.attrValues self.darwinModules ++ [
         configuration
         home-manager.darwinModules.home-manager
