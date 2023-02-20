@@ -56,6 +56,7 @@
         "dropbox"
         "firefox"
         "fork"
+        "geogebra"
         "gimp"
         "hammerspoon"
         "inkscape"
