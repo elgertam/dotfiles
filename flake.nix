@@ -87,6 +87,7 @@
         "suspicious-package"
         "taskexplorer"
         "the-unarchiver"
+        "transmission"
         "visual-studio-code"
         "whatsyoursign"
         "xquartz"
@@ -115,6 +116,8 @@
 
       system.defaults.dock = {
         autohide = true;
+        wvous-tr-corner = 2;
+        wvous-br-corner = 3;
       };
 
       system.defaults.NSGlobalDomain = {
