@@ -72,6 +72,7 @@
         "netiquette"
         "pandora"
         "postman"
+        "powerphotos"
         "ql-ansilove"
         "qlcolorcode"
         "qlimagesize"
