@@ -52,6 +52,7 @@
         "db-browser-for-sqlite"
         "detectx-swift"
         "dhs"
+        "diffusionbee"
         "docker"
         "dropbox"
         "firefox"
