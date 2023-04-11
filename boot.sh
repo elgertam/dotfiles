@@ -3,7 +3,9 @@
 install_nix() {
   if [ ! -d /nix/ ]; then
     echo Installing from Determinate Systems installer
-    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install darwin-multi --encrypt true --logger pretty
+    # curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install darwin-multi --logger pretty
+    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+
     echo Done installing Nix
   else
     echo Nix is already installed.

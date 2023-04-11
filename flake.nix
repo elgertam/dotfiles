@@ -56,6 +56,7 @@
         "docker"
         "dropbox"
         "firefox"
+        "figma"
         "fork"
         "geogebra"
         "gimp"
@@ -261,6 +262,20 @@
         }
       ];
       system = "x86_64-darwin";
+    };
+
+    darwinConfigurations.spock = darwinSystem {
+      modules = builtins.attrValues self.darwinModules ++ [
+        configuration
+        home-manager.darwinModules.home-manager
+        {
+          nixpkgs = nixpkgsConfig;
+          # home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.ame = home-configuration;
+        }
+      ];
+      system = "aarch64-darwin";
     };
 
     darwinConfigurations.riker = darwinSystem {
