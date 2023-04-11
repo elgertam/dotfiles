@@ -144,6 +144,19 @@
     };
 
     home-configuration = { config, pkgs, lib, ... }: {
+      home.file = {
+        hammerspoon = lib.mkIf pkgs.stdenvNoCC.isDarwin {
+          source = ./rc/hammerspoon;
+          target = ".hammerspoon";
+          recursive = true;
+        };
+
+        vimrc  = {
+          source = ./rc/vim/vimrc;
+          target = ".vimrc";
+        };
+      };
+
       home.stateVersion = "23.05";
 
       home.packages = with pkgs; [
