@@ -116,6 +116,8 @@
       security.pam.enableSudoTouchIdAuth = true;
 
       services.nix-daemon.enable = true;
+      services.postgresql.enable = true;
+      services.redis.enable = true;
 
       system.defaults.dock = {
         autohide = true;
