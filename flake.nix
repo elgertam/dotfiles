@@ -166,6 +166,7 @@
         poetry yarn nodePackages.npm rustup
         rnix-lsp nix-index
         ngrok
+        redis postgresql
       ];
 
       home.sessionPath = [
@@ -299,7 +300,12 @@
           nixpkgs = nixpkgsConfig;
           # home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.ame = {pkgs, ...}: { imports = [ home-configuration ({...}: { programs.git.userEmail = pkgs.lib.mkForce "aelgert@wrangle.io"; })]; };
+          home-manager.users.ame = {pkgs, ...}: {
+            imports = [
+              home-configuration
+              ({...}: { programs.git.userEmail = pkgs.lib.mkForce "aelgert@wrangle.io"; })
+            ];
+          };
         }
       ];
       system = "aarch64-darwin";
