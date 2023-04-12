@@ -18,6 +18,8 @@
   let
     inherit (darwin.lib) darwinSystem;
 
+    home = "/Users/ame";
+
     nixpkgs = inputs.nixpkgs-unstable;
 
     configuration = { pkgs, lib, ... }: {
@@ -116,8 +118,19 @@
       security.pam.enableSudoTouchIdAuth = true;
 
       services.nix-daemon.enable = true;
-      services.postgresql.enable = true;
+      services.postgresql = {
+        enable = true;
+        package = (pkgs.postgresql.withPackages (p: [ p.postgis ]) );
+        dataDir = "${home}/.postgres/data";
+      };
       services.redis.enable = true;
+
+      launchd.user.agents = {
+        postgresql.serviceConfig = {
+          StandardErrorPath = "${home}/.postgres/postgres.error.log";
+          StandardOutPath = "${home}/.postgres/postgres.log";
+        };
+      };
 
       system.defaults.dock = {
         autohide = true;
