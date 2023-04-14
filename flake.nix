@@ -123,7 +123,11 @@
         package = (pkgs.postgresql.withPackages (p: [ p.postgis ]) );
         dataDir = "${home}/.postgres/data";
       };
-      services.redis.enable = true;
+      services.redis = {
+        enable = true;
+        bind = "127.0.0.1";
+        dataDir = "${home}/.redis/data";
+      };
 
       launchd.user.agents = {
         postgresql.serviceConfig = {
@@ -211,10 +215,29 @@
       programs.direnv.enable = true;
       programs.direnv.nix-direnv.enable = true;
       programs.direnv.enableZshIntegration = true;
+      programs.direnv.stdlib = ''
+      export_function() {
+        local name=$1
+        local alias_dir=$PWD/.direnv/aliases
+        mkdir -p "$alias_dir"
+        PATH_add "$alias_dir"
+        local target="$alias_dir/$name"
+        if declare -f "$name" >/dev/null; then
+          echo "#!/usr/bin/env bash" > "$target"
+          declare -f "$name" >> "$target" 2>/dev/null
+          echo "$name" >> "$target"
+          chmod +x "$target"
+        fi
+      }
+      '';
 
       programs.git.enable = true;
       programs.git.userEmail = "andrew.elgert@gmail.com";
       programs.git.userName = "Andrew Mark Elgert";
+      programs.git.ignores = [
+        ".direnv/"
+      ];
+      programs.git.lfs.enable = true;
 
       programs.nix-index.enable = true;
       programs.nix-index.enableZshIntegration = true;
