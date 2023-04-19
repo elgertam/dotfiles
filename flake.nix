@@ -186,6 +186,7 @@
         rnix-lsp nix-index
         ngrok
         redis postgresql
+        thefuck
       ];
 
       home.sessionPath = [
