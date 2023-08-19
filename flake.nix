@@ -3,9 +3,9 @@
 
   inputs = {
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-23.05-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixos-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
 
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -306,7 +306,7 @@
       modules = builtins.attrValues self.darwinModules ++ [
         configuration
         {
-          users.users.ame.home = "/Users/ame";
+          users.users.ame.home = home;
         }
         home-manager.darwinModules.home-manager
         {
@@ -322,7 +322,7 @@
       modules = builtins.attrValues self.darwinModules ++ [
         configuration
         {
-          users.users.ame.home = "/Users/ame";
+          users.users.ame.home = home;
         }
         home-manager.darwinModules.home-manager
         {
@@ -338,7 +338,7 @@
       modules = builtins.attrValues self.darwinModules ++ [
         configuration
         {
-          users.users.ame.home = "/Users/ame";
+          users.users.ame.home = home;
         }
         home-manager.darwinModules.home-manager
         {
