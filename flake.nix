@@ -3,9 +3,9 @@
 
   inputs = {
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-23.05-darwin";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-23.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixos-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
 
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -29,6 +29,7 @@
       fonts.fontDir.enable = true;
       fonts.fonts = with pkgs; [
         fira-code
+        jost
         powerline-fonts
       ];
 
@@ -179,7 +180,7 @@
         };
       };
 
-      home.stateVersion = "23.05";
+      home.stateVersion = "23.11";
 
       home.packages = with pkgs; [
         coreutils man git jq vim bat tmux tree direnv htop silver-searcher
