@@ -73,6 +73,7 @@
         "knockknock"
         "logi-options-plus"
         "lulu"
+        "macgpt"
         "macs-fan-control"
         "macsvg"
         "meld"
@@ -243,6 +244,12 @@
         ".direnv/"
       ];
       programs.git.lfs.enable = true;
+      programs.git.extraConfig = {
+        core.excludesfile = "${home}/.gitignore_global";
+        init.defaultBranch = "master";
+        push.autoSetupRemote = true;
+        pull.rebase = true;
+      };
 
       programs.nix-index.enable = true;
       programs.nix-index.enableZshIntegration = true;
