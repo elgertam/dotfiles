@@ -148,9 +148,11 @@
       };
 
       system.defaults.NSGlobalDomain = {
+        ApplePressAndHoldEnabled = false;
         InitialKeyRepeat = 35;
         KeyRepeat = 2;
-        ApplePressAndHoldEnabled = false;
+        NSAutomaticCapitalizationEnabled = false;
+        NSAutomaticPeriodSubstitutionEnabled = false;
         "com.apple.swipescrolldirection" = false;
         "com.apple.mouse.tapBehavior" = 1;
       };
