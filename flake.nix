@@ -46,6 +46,7 @@
       homebrew.casks = [
         "1password"
         "appcleaner"
+        "anydesk"
         "bartender"
         "basictex"
         "blockblock"
