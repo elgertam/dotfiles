@@ -191,7 +191,7 @@
         curl wget
         ruby python310 nodejs
         poetry yarn nodePackages.npm rustup
-        rnix-lsp nix-index
+        rnix-lsp nix-index nixd nil
         ngrok
         redis postgresql
         thefuck
