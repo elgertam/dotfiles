@@ -24,7 +24,7 @@
 
     configuration = { pkgs, lib, ... }: {
 
-      environment.systemPackages = with pkgs; [ ];
+      environment.systemPackages = [ ];
 
       fonts.fontDir.enable = true;
       fonts.fonts = with pkgs; [
