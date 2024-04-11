@@ -36,15 +36,11 @@
       homebrew.enable = true;
       homebrew.global.brewfile = true;
 
-      homebrew.taps = [
-        "homebrew/core"
-        "homebrew/cask"
-      ];
-
       homebrew.caskArgs.no_quarantine = true;
 
       homebrew.casks = [
         "1password"
+        "anytype"
         "appcleaner"
         "anydesk"
         "bartender"
@@ -191,7 +187,7 @@
         curl wget
         ruby python310 nodejs
         poetry yarn nodePackages.npm rustup
-        rnix-lsp nix-index nixd nil
+        nix-index nixd nil
         ngrok
         redis postgresql
         thefuck
