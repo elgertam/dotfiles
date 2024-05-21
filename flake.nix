@@ -40,6 +40,7 @@
 
       homebrew.casks = [
         "1password"
+        "anaconda"
         "anytype"
         "appcleaner"
         "anydesk"
@@ -142,6 +143,26 @@
         autohide = true;
         wvous-tr-corner = 2;
         wvous-br-corner = 3;
+        magnification = true;
+      };
+
+      system.defaults.finder = {
+        AppleShowAllExtensions = true;
+        AppleShowAllFiles = true;
+        FXPreferredViewStyle = "clmv";
+        QuitMenuItem = true;
+        ShowPathbar = true;
+        ShowStatusBar = true;
+        _FXShowPosixPathInTitle = true;
+      };
+
+      system.defaults.menuExtraClock = {
+        Show24Hour = true;
+        ShowAMPM = false;
+        ShowDate = 1;
+        ShowDayOfWeek = true;
+        ShowDayOfMonth = true;
+        ShowSeconds = true;
       };
 
       system.defaults.NSGlobalDomain = {
@@ -301,6 +322,20 @@
       if which anyenv > /dev/null; then
         eval "$(anyenv init - zsh)";
       fi
+
+      # !! Contents within this block are managed by 'conda init' !!
+      __conda_setup="$('/opt/homebrew/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+      if [ $? -eq 0 ]; then
+          eval "$__conda_setup"
+      else
+          if [ -f "/opt/homebrew/anaconda3/etc/profile.d/conda.sh" ]; then
+              . "/opt/homebrew/anaconda3/etc/profile.d/conda.sh"
+          else
+              export PATH="/opt/homebrew/anaconda3/bin:$PATH"
+          fi
+      fi
+      unset __conda_setup
+      # <<< conda initialize <<<
       '';
 
       programs.zsh.oh-my-zsh.enable = true;
