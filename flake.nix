@@ -75,6 +75,7 @@
         "macs-fan-control"
         "macsvg"
         "meld"
+        "messenger"
         "microsoft-teams"
         "notion"
         "netiquette"
