@@ -108,9 +108,6 @@
         "zoom"
       ];
 
-      # needed for compatibility
-      ids.gids.nixbld = 30000;
-
       nix.enable = true;
 
       nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
