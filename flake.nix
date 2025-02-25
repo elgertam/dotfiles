@@ -3,9 +3,9 @@
 
   inputs = {
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-23.11-darwin";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixos-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
 
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -26,8 +26,7 @@
 
       environment.systemPackages = [ ];
 
-      fonts.fontDir.enable = true;
-      fonts.fonts = with pkgs; [
+      fonts.packages = with pkgs; [
         fira-code
         jost
         powerline-fonts
@@ -35,15 +34,14 @@
 
       homebrew.enable = true;
       homebrew.global.brewfile = true;
-
       homebrew.caskArgs.no_quarantine = true;
 
       homebrew.casks = [
         "1password"
         "anaconda"
+        "anydesk"
         "anytype"
         "appcleaner"
-        "anydesk"
         "bartender"
         "basictex"
         "blockblock"
@@ -110,12 +108,18 @@
         "zoom"
       ];
 
+      # needed for compatibility
+      ids.gids.nixbld = 30000;
+
+      nix.enable = true;
+
       nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+
+      nix.optimise.automatic = true;
 
       nix.package = pkgs.nixVersions.stable;
 
       nix.settings = {
-        auto-optimise-store = true;
         experimental-features = [ "nix-command" "flakes" ];
         extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [ "x86_64-darwin" "aarch64-darwin"];
       };
@@ -125,9 +129,8 @@
       # needed to enable Zsh system-side including in /etc
       programs.zsh.enable = true;
 
-      security.pam.enableSudoTouchIdAuth = true;
+      security.pam.services.sudo_local.touchIdAuth = true;
 
-      services.nix-daemon.enable = true;
       services.postgresql = {
         enable = true;
         package = (pkgs.postgresql.withPackages (p: [ p.postgis ]) );
@@ -187,6 +190,8 @@
         TrackpadRightClick= true;
         TrackpadThreeFingerDrag = true;
       };
+
+      system.stateVersion = 6;
     };
 
     nixpkgsConfig = {
@@ -208,7 +213,7 @@
         };
       };
 
-      home.stateVersion = "23.11";
+      home.stateVersion = "24.11";
 
       home.packages = with pkgs; [
         coreutils man git jq vim bat tmux tree direnv htop silver-searcher
