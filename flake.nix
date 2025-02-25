@@ -105,6 +105,7 @@
         "ultimaker-cura"
         "visual-studio-code"
         "whatsyoursign"
+        "windows-app"
         "xquartz"
         "zoom"
       ];
@@ -193,7 +194,7 @@
       overlays = builtins.attrValues self.overlays;
     };
 
-    home-configuration = { config, pkgs, lib, ... }: {
+    home-configuration = { pkgs, lib, ... }: {
       home.file = {
         hammerspoon = lib.mkIf pkgs.stdenvNoCC.isDarwin {
           source = ./rc/hammerspoon;
@@ -213,7 +214,7 @@
         coreutils man git jq vim bat tmux tree direnv htop silver-searcher
         curl wget
         ruby python310 nodejs
-        poetry yarn nodePackages.npm rustup
+        poetry yarn nodePackages.npm rustup uv
         nix-index nixd nil
         ngrok
         redis postgresql
