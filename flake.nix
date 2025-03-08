@@ -137,18 +137,18 @@
       services.postgresql = {
         enable = true;
         package = (pkgs.postgresql.withPackages (p: [ p.postgis ]) );
-        dataDir = "${home}/.postgres/data";
+        dataDir = "/var/log/postgres/data";
       };
       services.redis = {
         enable = true;
         bind = "127.0.0.1";
-        dataDir = "${home}/.redis/data";
+        dataDir = "/var/log/redis/data";
       };
 
       launchd.user.agents = {
         postgresql.serviceConfig = {
-          StandardErrorPath = "${home}/.postgres/postgres.error.log";
-          StandardOutPath = "${home}/.postgres/postgres.log";
+          StandardErrorPath = "/var/log/postgres/postgres.error.log";
+          StandardOutPath = "/var/log/postgres/postgres.out.log";
         };
       };
 
@@ -368,7 +368,7 @@
           configuration
           {
             networking.computerName = hostname ;
-            users.users.${username}.home = home;
+            users.users.${username}.home = "/Users/${username}";
           }
           home-manager.darwinModules.home-manager
           {
