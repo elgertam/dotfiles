@@ -362,65 +362,47 @@
       programs.zsh.oh-my-zsh.theme = "agnoster";
     };
 
+    darwinConfigBuilder = { hostname, system, username }:
+      darwinSystem {
+        modules = builtins.attrValues self.darwinModules ++ [
+          configuration
+          {
+            networking.computerName = hostname ;
+            users.users.${username}.home = home;
+          }
+          home-manager.darwinModules.home-manager
+          {
+            nixpkgs = nixpkgsConfig;
+            home-manager.useUserPackages = true;
+            home-manager.users.${username} = home-configuration;
+          }
+        ];
+        system = system;
+      };
   in
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake ./modules/examples#simple \
     #       --override-input darwin .
-    darwinConfigurations.laforge = darwinSystem {
-      modules = builtins.attrValues self.darwinModules ++ [
-        configuration
-        {
-          users.users.ame.home = home;
-        }
-        home-manager.darwinModules.home-manager
-        {
-          nixpkgs = nixpkgsConfig;
-          home-manager.useUserPackages = true;
-          home-manager.users.ame = home-configuration;
-        }
-      ];
+
+    darwinConfigurations.laforge = darwinConfigBuilder {
+      hostname = "laforge";
       system = "x86_64-darwin";
+      username = "ame";
     };
 
-    darwinConfigurations.spock = darwinSystem {
-      modules = builtins.attrValues self.darwinModules ++ [
-        configuration
-        {
-          users.users.ame.home = home;
-        }
-        home-manager.darwinModules.home-manager
-        {
-          nixpkgs = nixpkgsConfig;
-          home-manager.useUserPackages = true;
-          home-manager.users.ame = home-configuration;
-        }
-      ];
+    darwinConfigurations.spock = darwinConfigBuilder {
+      hostname = "spock";
       system = "aarch64-darwin";
+      username = "ame";
     };
 
-    darwinConfigurations.riker = darwinSystem {
-      modules = builtins.attrValues self.darwinModules ++ [
-        configuration
-        {
-          users.users.ame.home = home;
-        }
-        home-manager.darwinModules.home-manager
-        {
-          nixpkgs = nixpkgsConfig;
-          home-manager.useUserPackages = true;
-          home-manager.users.ame = {pkgs, ...}: {
-            imports = [
-              home-configuration
-              ({...}: { programs.git.userEmail = pkgs.lib.mkForce "aelgert@wrangle.io"; })
-            ];
-          };
-        }
-      ];
+    darwinConfigurations.riker = darwinConfigBuilder {
+      hostname = "riker";
       system = "aarch64-darwin";
+      username = "ame";
     };
 
-    # Expose the package set, including overlays, for convenience.
     darwinPackages = self.darwinConfigurations.laforge.pkgs;
 
     darwinModules = { };
