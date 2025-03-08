@@ -125,8 +125,14 @@
 
       # needed to enable Zsh system-side including in /etc
       programs.zsh.enable = true;
+      programs.zsh.enableCompletion = true;
+
+      programs.direnv.enable = true;
+
+      programs.nix-index.enable = true;
 
       security.pam.services.sudo_local.touchIdAuth = true;
+      security.pam.services.sudo_local.reattach = true;
 
       services.postgresql = {
         enable = true;
@@ -267,18 +273,22 @@
       '';
 
       programs.git.enable = true;
-      programs.git.userEmail = "andrew.elgert@gmail.com";
-      programs.git.userName = "Andrew Mark Elgert";
-      programs.git.ignores = [
-        ".direnv/"
-      ];
-      programs.git.lfs.enable = true;
       programs.git.extraConfig = {
         core.excludesfile = "${home}/.gitignore_global";
         init.defaultBranch = "master";
         push.autoSetupRemote = true;
         pull.rebase = true;
       };
+      programs.git.ignores = [
+        ".direnv/"
+      ];
+      programs.git.lfs.enable = true;
+      programs.git.userEmail = "andrew.elgert@gmail.com";
+      programs.git.userName = "Andrew Mark Elgert";
+
+      programs.home-manager.enable = true;
+
+      programs.htop.enable = true;
 
       programs.nix-index.enable = true;
       programs.nix-index.enableZshIntegration = true;
