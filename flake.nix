@@ -47,6 +47,7 @@
         "blockblock"
         "brave-browser"
         "chromium"
+        "claude"
         "creality-print"
         "creality-slicer"
         "dash"
