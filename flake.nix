@@ -105,12 +105,17 @@
         "the-unarchiver"
         "transmission"
         "ultimaker-cura"
+        "utm"
         "visual-studio-code"
         "whatsyoursign"
         "windows-app"
         "xquartz"
         "zoom"
-      ];
+      ] ++ (
+        if (pkgs.system == "aarch64-darwin") then [
+          "chatgpt"
+        ] else []
+      );
 
       nix.enable = true;
 
@@ -223,7 +228,8 @@
       home.stateVersion = "24.11";
 
       home.packages = with pkgs; [
-        coreutils man git jq vim bat tmux tree direnv htop silver-searcher
+        coreutils man git jq vim bat
+        tmux tree direnv htop silver-searcher
         curl wget
         ruby python310 nodejs
         poetry yarn nodePackages.npm rustup uv
