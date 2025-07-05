@@ -56,7 +56,7 @@
         "detectx-swift"
         "dhs"
         "diffusionbee"
-        "docker"
+        "docker-desktop"
         "dropbox"
         "firefox"
         "figma"
@@ -65,7 +65,6 @@
         "gimp"
         "hammerspoon"
         "inkscape"
-        "ipfs"
         "jupyter-notebook-ql"
         "keka"
         "kdiff3"
@@ -203,6 +202,8 @@
         TrackpadThreeFingerDrag = true;
       };
 
+      system.primaryUser = "ame";
+
       system.stateVersion = 6;
     };
 
@@ -236,7 +237,6 @@
         nix-index nixd nil
         ngrok
         redis postgresql
-        thefuck
       ];
 
       home.sessionPath = [
