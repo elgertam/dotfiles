@@ -226,6 +226,10 @@
         };
       };
 
+      home.file.".npmrc".text = ''
+        prefix=$HOME/.npm-global
+      '';
+
       home.stateVersion = "24.11";
 
       home.packages = with pkgs; [
@@ -241,6 +245,7 @@
 
       home.sessionPath = [
         "$HOME/.local/bin"
+        "$HOME/.npm-global/bin"
       ];
 
       home.sessionVariables = {
@@ -249,9 +254,11 @@
         SVN_EDITOR = "vim";
         GIT_EDITOR = "vim";
         PIPENV_VENV_IN_PROJECT = 1;
+        NPM_CONFIG_PREFIX = "$HOME/.npm-global";
       };
 
       home.shellAliases = {
+        brew = if pkgs.system == "aarch64-darwin" then "/opt/homebrew/bin/brew" else "/usr/local/omebrew/bin/brew";
         ll = "ls -lAG";
         ls = "ls -G";
         now = "date +%Y%m%d%H%M%S";
