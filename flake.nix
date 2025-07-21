@@ -38,7 +38,6 @@
 
       homebrew.casks = [
         "1password"
-        "anaconda"
         "anydesk"
         "anytype"
         "appcleaner"
@@ -86,17 +85,22 @@
         "postman"
         "powerphotos"
         "prusaslicer"
-        # "ql-ansilove"
         "qlcolorcode"
+        "quickgeojson"
         "qlimagesize"
         "qlmarkdown"
-        "qlrest"
+        "qlmobi"
+        "qlprettypatch"
         "qlstephen"
+        "qlswift"
+        "qlvideo"
         "quicklook-csv"
         "quicklook-json"
         "reikey"
+        "scriptql"
         "selfcontrol"
         "slack"
+        "syntax-highlight"
         "stats"
         "suspicious-package"
         "tabula"
@@ -259,6 +263,7 @@
 
       home.shellAliases = {
         brew = if pkgs.system == "aarch64-darwin" then "/opt/homebrew/bin/brew" else "/usr/local/omebrew/bin/brew";
+        claude = "/Users/ame/.claude/local/claude";
         ll = "ls -lAG";
         ls = "ls -G";
         now = "date +%Y%m%d%H%M%S";
@@ -313,7 +318,7 @@
       programs.zsh.enable = true;
       programs.zsh.enableCompletion = true;
 
-      programs.zsh.initExtra = ''
+      programs.zsh.initContent = ''
       prompt_dir() {
         prompt_segment blue $CURRENT_FG '%1~'
       }
@@ -358,20 +363,6 @@
       if which anyenv > /dev/null; then
         eval "$(anyenv init - zsh)";
       fi
-
-      # !! Contents within this block are managed by 'conda init' !!
-      __conda_setup="$('/opt/homebrew/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-      if [ $? -eq 0 ]; then
-          eval "$__conda_setup"
-      else
-          if [ -f "/opt/homebrew/anaconda3/etc/profile.d/conda.sh" ]; then
-              . "/opt/homebrew/anaconda3/etc/profile.d/conda.sh"
-          else
-              export PATH="/opt/homebrew/anaconda3/bin:$PATH"
-          fi
-      fi
-      unset __conda_setup
-      # <<< conda initialize <<<
       '';
 
       programs.zsh.oh-my-zsh.enable = true;
