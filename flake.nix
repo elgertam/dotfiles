@@ -82,6 +82,7 @@
         "notion"
         "netiquette"
         "pandora"
+        "podman-desktop"
         "postman"
         "powerphotos"
         "prusaslicer"
@@ -240,11 +241,11 @@
         coreutils man git jq vim bat
         tmux tree direnv htop silver-searcher
         curl wget
-        ruby python310 nodejs
+        ruby python313 nodejs openjdk17
         poetry yarn nodePackages.npm rustup uv
         nix-index nixd nil
         ngrok
-        redis postgresql
+        redis postgresql podman
       ];
 
       home.sessionPath = [
@@ -259,11 +260,12 @@
         GIT_EDITOR = "vim";
         PIPENV_VENV_IN_PROJECT = 1;
         NPM_CONFIG_PREFIX = "$HOME/.npm-global";
+        DOCKER_HOST = "unix:///tmp/podman/podman-machine-default-api.sock";
       };
 
       home.shellAliases = {
         brew = if pkgs.system == "aarch64-darwin" then "/opt/homebrew/bin/brew" else "/usr/local/omebrew/bin/brew";
-        claude = "/Users/ame/.claude/local/claude";
+        claude = "/Users/ame/.claude/local/claude --dangerously-skip-permissions";
         ll = "ls -lAG";
         ls = "ls -G";
         now = "date +%Y%m%d%H%M%S";
