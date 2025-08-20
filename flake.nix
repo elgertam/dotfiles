@@ -85,6 +85,7 @@
         "podman-desktop"
         "postman"
         "powerphotos"
+        "protonvpn"
         "prusaslicer"
         "qlcolorcode"
         "quickgeojson"
@@ -201,6 +202,11 @@
         "com.apple.mouse.tapBehavior" = 1;
       };
 
+      system.defaults.screencapture = {
+        target = "clipboard";
+        type = "png";
+      };
+
       system.defaults.trackpad = {
         Clicking = true;
         TrackpadRightClick= true;
@@ -245,7 +251,7 @@
         poetry yarn nodePackages.npm rustup uv
         nix-index nixd nil
         ngrok
-        redis postgresql podman
+        redis postgresql podman podman-compose
       ];
 
       home.sessionPath = [
