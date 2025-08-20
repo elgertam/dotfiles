@@ -45,6 +45,7 @@ with lib;
       "knockknock"
       "lulu"
       "netiquette"
+      "ransomwhere"
       "reikey"
       "suspicious-package"
       "taskexplorer"
