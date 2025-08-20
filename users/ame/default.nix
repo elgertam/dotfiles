@@ -12,11 +12,19 @@
       source = ../../rc/vim/vimrc;
       target = ".vimrc";
     };
-  };
 
-  home.file.".npmrc".text = ''
-    prefix=$HOME/.npm-global
-  '';
+    ".npmrc" = {
+      text = ''
+        prefix=$HOME/.npm-global
+      '';
+    };
+  } // (lib.optionalAttrs pkgs.stdenvNoCC.isLinux {
+    # Linux-specific dotfiles can be added here
+    # For example, window manager configs:
+    # ".config/i3/config" = {
+    #   source = ../../rc/i3/config;
+    # };
+  });
 
   home.stateVersion = "24.11";
 
@@ -32,16 +40,29 @@
     GIT_EDITOR = "vim";
     PIPENV_VENV_IN_PROJECT = 1;
     NPM_CONFIG_PREFIX = "$HOME/.npm-global";
+  } // (lib.optionalAttrs pkgs.stdenvNoCC.isDarwin {
+    # macOS-specific: Podman machine socket
     DOCKER_HOST = "unix:///tmp/podman/podman-machine-default-api.sock";
-  };
+  }) // (lib.optionalAttrs pkgs.stdenvNoCC.isLinux {
+    # Linux-specific: Native podman socket
+    DOCKER_HOST = "unix:///run/user/1000/podman/podman.sock";
+  });
 
   home.shellAliases = {
+    ll = if pkgs.stdenvNoCC.isDarwin then "ls -lAG" else "ls -lA --color=auto";
+    ls = if pkgs.stdenvNoCC.isDarwin then "ls -G" else "ls --color=auto";
+    now = "date +%Y%m%d%H%M%S";
+  } // (lib.optionalAttrs pkgs.stdenvNoCC.isDarwin {
+    # macOS-specific aliases
     brew = if pkgs.system == "aarch64-darwin" then "/opt/homebrew/bin/brew" else "/usr/local/homebrew/bin/brew";
     claude = "/Users/ame/.claude/local/claude --dangerously-skip-permissions";
-    ll = "ls -lAG";
-    ls = "ls -G";
-    now = "date +%Y%m%d%H%M%S";
-  };
+  }) // (lib.optionalAttrs pkgs.stdenvNoCC.isLinux {
+    # Linux-specific aliases
+    claude = "$HOME/.claude/local/claude --dangerously-skip-permissions";
+    # Add clipboard utilities
+    pbcopy = "xclip -selection clipboard";
+    pbpaste = "xclip -selection clipboard -o";
+  });
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
@@ -70,7 +91,7 @@
 
   programs.git.enable = true;
   programs.git.extraConfig = {
-    core.excludesfile = "/Users/ame/.gitignore_global";
+    core.excludesfile = if pkgs.stdenvNoCC.isDarwin then "/Users/ame/.gitignore_global" else "/home/ame/.gitignore_global";
     init.defaultBranch = "master";
     push.autoSetupRemote = true;
     pull.rebase = true;
