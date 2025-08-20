@@ -10,6 +10,7 @@
     ../modules/roles/developer.nix
     ../modules/roles/cad.nix
     ../modules/roles/personal.nix
+    ../modules/podman-darwin.nix
   ];
 
   # Shared configuration for all hosts

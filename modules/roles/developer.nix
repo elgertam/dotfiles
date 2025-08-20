@@ -56,21 +56,9 @@ with lib;
         bind = "127.0.0.1";
         dataDir = "/var/log/redis/data";
       };
-      podman.enable = true;
-    };
-
-    # Development-optimized system settings
-    system.defaults.NSGlobalDomain = {
-      ApplePressAndHoldEnabled = false;  # Better for coding
-      InitialKeyRepeat = 35;
-      KeyRepeat = 2;
-    };
-
-    # Ensure podman containers are configured if services enabled
-    services.podman.containers = mkIf (
-      config.services.podman.enable && 
-      !builtins.elem "no-containers" config.machine.taints
-    ) {
+      podman = {
+        enable = true;
+        containers = mkIf (!builtins.elem "no-containers" config.machine.taints) {
       # SQL Server
       rms-sql = {
         image = "mcr.microsoft.com/mssql/server:2022-latest";
@@ -96,6 +84,15 @@ with lib;
         cmd = [ "/syndicate-server" "-c" "/config.pr" ];
         autoStart = true;
       };
+        };
+      };
+    };
+
+    # Development-optimized system settings
+    system.defaults.NSGlobalDomain = {
+      ApplePressAndHoldEnabled = false;  # Better for coding
+      InitialKeyRepeat = 35;
+      KeyRepeat = 2;
     };
 
     # Launchd configuration for postgresql
