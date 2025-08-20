@@ -245,6 +245,13 @@
         TrackpadThreeFingerDrag = true;
       };
 
+      # Ensure Universal Clipboard (Handoff clipboard) is enabled
+      system.defaults.CustomUserPreferences = {
+        "com.apple.coreservices.useractivityd" = {
+          ClipboardSharingEnabled = 1;
+        };
+      };
+
       system.primaryUser = "ame";
 
       system.stateVersion = 6;
