@@ -9,11 +9,11 @@ with lib;
       "anytype"
       "dropbox"
       "selfcontrol"
-      
+
       # Media & Entertainment
       "pandora"
       "transmission"
-      
+
       # Personal utilities
       "anydesk"
       "basictex"
@@ -36,16 +36,21 @@ with lib;
     };
 
     # Lighter package set for personal use
-    home-manager.users.ame.home.packages = with pkgs; 
+    home-manager.users.ame.home.packages = with pkgs;
       # Essential tools only
       [ coreutils man git vim curl wget ]
       ++ optionals (config.machine.profile == "standard" || config.machine.profile == "full") [
         # Standard personal tools
-        tmux tree htop bat jq
+        tmux
+        tree
+        htop
+        bat
+        jq
       ]
       ++ optionals (config.machine.profile == "full") [
         # Full personal development environment
-        python313 nodejs
+        python313
+        nodejs
       ];
   };
 }

@@ -1,6 +1,4 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
+{ ... }:
 
 {
   config = {
@@ -47,7 +45,7 @@ with lib;
 
     system.defaults.trackpad = {
       Clicking = true;
-      TrackpadRightClick= true;
+      TrackpadRightClick = true;
       TrackpadThreeFingerDrag = true;
     };
 

@@ -1,11 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ ... }:
 
 {
   imports = [ ./shared.nix ];
 
   machine = {
     roles = [ "developer" "cad" ];
-    taints = [ ];  # No restrictions
+    taints = [ ]; # No restrictions
     profile = "full";
     hardware = {
       arch = "aarch64";
@@ -15,7 +15,7 @@
   };
 
   networking.computerName = "spock";
-  
+
   # Host-specific configuration for development + CAD workstation
   # ARM-specific optimizations could go here
 }

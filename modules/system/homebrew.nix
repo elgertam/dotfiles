@@ -18,26 +18,26 @@ with lib;
       "keka"
       "stats"
       "the-unarchiver"
-      
+
       # Browsers
       "brave-browser"
       "chromium"
       "firefox"
       "microsoft-edge"
-      
+
       # Communication
       "messenger"
       "slack"
       "zoom"
-      
+
       # Office & Documents
       "microsoft-office"
       "notion"
-      
+
       # Media & Graphics
       "gimp"
       "inkscape"
-      
+
       # System & Security
       "blockblock"
       "detectx-swift"
@@ -49,7 +49,7 @@ with lib;
       "suspicious-package"
       "taskexplorer"
       "whatsyoursign"
-      
+
       # QuickLook Plugins
       "jupyter-notebook-ql"
       "qlcolorcode"
@@ -65,7 +65,7 @@ with lib;
       "quicklook-json"
       "scriptql"
       "syntax-highlight"
-      
+
       # System Tools
       "hammerspoon"
       "xquartz"
@@ -73,7 +73,7 @@ with lib;
       # Architecture-specific applications
       if (pkgs.system == "aarch64-darwin") then [
         "chatgpt"
-      ] else []
+      ] else [ ]
     );
 
     fonts.packages = with pkgs; [

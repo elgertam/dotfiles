@@ -23,23 +23,40 @@ with lib;
 
     home-manager.users.ame.home.packages = with pkgs; [
       # Core development tools
-      git jq vim bat curl wget
-      tree direnv htop silver-searcher
-      
+      git
+      jq
+      vim
+      bat
+      curl
+      wget
+      tree
+      direnv
+      htop
+      silver-searcher
+
       # Programming languages & runtimes
-      nodejs python313 ruby openjdk17
+      nodejs
+      python313
+      ruby
+      openjdk17
       rustup
-      
+
       # Package managers & build tools
-      poetry yarn nodePackages.npm uv
-      
+      poetry
+      yarn
+      nodePackages.npm
+      uv
+
       # Nix development
-      nixd nil nix-index
-      
+      nixd
+      nil
+      nix-index
+
       # Development utilities
       ngrok
     ] ++ optionals (!builtins.elem "no-containers" config.machine.taints) [
-      podman podman-compose
+      podman
+      podman-compose
     ] ++ optionals (!builtins.elem "limited-storage" config.machine.taints) [
       # Heavy development tools
     ];
@@ -48,7 +65,7 @@ with lib;
     services = mkIf (!builtins.elem "no-services" config.machine.taints) {
       postgresql = {
         enable = true;
-        package = (pkgs.postgresql.withPackages (p: [ p.postgis ]) );
+        package = (pkgs.postgresql.withPackages (p: [ p.postgis ]));
         dataDir = "/var/log/postgres/data";
       };
       redis = {
@@ -59,38 +76,38 @@ with lib;
       podman = {
         enable = true;
         containers = mkIf (!builtins.elem "no-containers" config.machine.taints) {
-      # SQL Server
-      rms-sql = {
-        image = "mcr.microsoft.com/mssql/server:2022-latest";
-        ports = [ "1433:1433" ];
-        volumes = [
-          "rms-sqldata:/var/opt/mssql/data"
-          "/Users/ame/workspace/com.schoolcrossing/test-rig/backups:/var/opt/mssql/backups:ro"
-        ];
-        environment = {
-          ACCEPT_EULA = "Y";
-          SA_PASSWORD = "DevStore123!";
-        };
-        autoStart = true;
-      };
+          # SQL Server
+          rms-sql = {
+            image = "mcr.microsoft.com/mssql/server:2022-latest";
+            ports = [ "1433:1433" ];
+            volumes = [
+              "rms-sqldata:/var/opt/mssql/data"
+              "/Users/ame/workspace/com.schoolcrossing/test-rig/backups:/var/opt/mssql/backups:ro"
+            ];
+            environment = {
+              ACCEPT_EULA = "Y";
+              SA_PASSWORD = "DevStore123!";
+            };
+            autoStart = true;
+          };
 
-      # Syndicate broker
-      syndicate-broker = {
-        image = "leastfixedpoint/syndicate-server";
-        ports = [ "8001:8001" "9001:9001" ];
-        volumes = [
-          "/Users/ame/workspace/org.syndicate-lang/syndicate-py/chat.server-config.pr:/config.pr:ro"
-        ];
-        cmd = [ "/syndicate-server" "-c" "/config.pr" ];
-        autoStart = true;
-      };
+          # Syndicate broker
+          syndicate-broker = {
+            image = "leastfixedpoint/syndicate-server";
+            ports = [ "8001:8001" "9001:9001" ];
+            volumes = [
+              "/Users/ame/workspace/org.syndicate-lang/syndicate-py/chat.server-config.pr:/config.pr:ro"
+            ];
+            cmd = [ "/syndicate-server" "-c" "/config.pr" ];
+            autoStart = true;
+          };
         };
       };
     };
 
     # Development-optimized system settings
     system.defaults.NSGlobalDomain = {
-      ApplePressAndHoldEnabled = false;  # Better for coding
+      ApplePressAndHoldEnabled = false; # Better for coding
       InitialKeyRepeat = 35;
       KeyRepeat = 2;
     };

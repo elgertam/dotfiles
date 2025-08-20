@@ -1,6 +1,4 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
+{ lib, pkgs, ... }:
 
 {
   config = {
@@ -12,7 +10,7 @@ with lib;
 
     nix.settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [ "x86_64-darwin" "aarch64-darwin"];
+      extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [ "x86_64-darwin" "aarch64-darwin" ];
     };
 
     nixpkgs.config = { allowUnfree = true; };

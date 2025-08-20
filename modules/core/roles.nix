@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 with lib;
 
@@ -6,17 +6,23 @@ with lib;
   options = {
     machine = {
       roles = mkOption {
-        type = types.listOf (types.enum [ 
-          "developer" "cad" "media" "server" "gaming" "work" "personal" 
+        type = types.listOf (types.enum [
+          "developer"
+          "cad"
+          "media"
+          "server"
+          "gaming"
+          "work"
+          "personal"
         ]);
-        default = [];
+        default = [ ];
         description = "Roles assigned to this machine";
         example = [ "developer" "cad" ];
       };
 
       taints = mkOption {
         type = types.listOf types.str;
-        default = [];
+        default = [ ];
         description = "Taints/restrictions for this machine";
         example = [ "no-gaming" "corporate" "limited-storage" "no-services" "no-containers" ];
       };
@@ -32,7 +38,7 @@ with lib;
           type = types.enum [ "x86_64" "aarch64" ];
           description = "CPU architecture";
         };
-        
+
         gpu = mkOption {
           type = types.enum [ "intel" "amd" "nvidia" "apple" "none" ];
           default = "none";

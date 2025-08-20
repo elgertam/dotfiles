@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   home.file = {
@@ -8,7 +8,7 @@
       recursive = true;
     };
 
-    vimrc  = {
+    vimrc = {
       source = ../../rc/vim/vimrc;
       target = ".vimrc";
     };

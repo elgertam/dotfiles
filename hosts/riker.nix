@@ -1,11 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ ... }:
 
 {
   imports = [ ./shared.nix ];
 
   machine = {
     roles = [ "personal" ];
-    taints = [ "no-services" "no-containers" ];  # Lightweight setup
+    taints = [ "no-services" "no-containers" ]; # Lightweight setup
     profile = "minimal";
     hardware = {
       arch = "aarch64";
@@ -15,7 +15,7 @@
   };
 
   networking.computerName = "riker";
-  
+
   # Minimal personal machine configuration
   # Focus on essential apps and lightweight setup
 }

@@ -15,62 +15,62 @@
   };
 
   outputs = { self, darwin, home-manager, ... }@inputs:
-  let
-    inherit (darwin.lib) darwinSystem;
+    let
+      inherit (darwin.lib) darwinSystem;
 
-    nixpkgs = inputs.nixpkgs-unstable;
+      nixpkgs = inputs.nixpkgs-unstable;
 
-    nixpkgsConfig = {
-      config.allowUnfree = true;
-      overlays = builtins.attrValues self.overlays;
+      nixpkgsConfig = {
+        config.allowUnfree = true;
+        overlays = builtins.attrValues self.overlays;
+      };
+
+      mkDarwinSystem = { hostname, system }:
+        darwinSystem {
+          inherit system;
+          modules = [
+            # Host-specific configuration (includes shared.nix)
+            ./hosts/${hostname}.nix
+
+            # Set nixPath for compatibility
+            {
+              nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+            }
+
+            # Home manager integration
+            home-manager.darwinModules.home-manager
+            {
+              nixpkgs = nixpkgsConfig;
+              home-manager.useUserPackages = true;
+              home-manager.users.ame = import ./users/ame;
+            }
+          ];
+        };
+    in
+    {
+      darwinConfigurations = {
+        laforge = mkDarwinSystem {
+          hostname = "laforge";
+          system = "x86_64-darwin";
+        };
+
+        spock = mkDarwinSystem {
+          hostname = "spock";
+          system = "aarch64-darwin";
+        };
+
+        riker = mkDarwinSystem {
+          hostname = "riker";
+          system = "aarch64-darwin";
+        };
+      };
+
+      darwinPackages = self.darwinConfigurations.laforge.pkgs;
+
+      darwinModules = {
+        podman-darwin = import ./modules/podman-darwin.nix;
+      };
+
+      overlays = { };
     };
-
-    mkDarwinSystem = { hostname, system }:
-      darwinSystem {
-        inherit system;
-        modules = [
-          # Host-specific configuration (includes shared.nix)
-          ./hosts/${hostname}.nix
-          
-          # Set nixPath for compatibility
-          {
-            nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
-          }
-          
-          # Home manager integration
-          home-manager.darwinModules.home-manager
-          {
-            nixpkgs = nixpkgsConfig;
-            home-manager.useUserPackages = true;
-            home-manager.users.ame = import ./users/ame;
-          }
-        ];
-      };
-  in
-  {
-    darwinConfigurations = {
-      laforge = mkDarwinSystem {
-        hostname = "laforge";
-        system = "x86_64-darwin";
-      };
-
-      spock = mkDarwinSystem {
-        hostname = "spock";
-        system = "aarch64-darwin";
-      };
-
-      riker = mkDarwinSystem {
-        hostname = "riker";
-        system = "aarch64-darwin";
-      };
-    };
-
-    darwinPackages = self.darwinConfigurations.laforge.pkgs;
-
-    darwinModules = {
-      podman-darwin = import ./modules/podman-darwin.nix;
-    };
-
-    overlays = { };
-  };
 }

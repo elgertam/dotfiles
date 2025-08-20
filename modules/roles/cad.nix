@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 with lib;
 
@@ -18,17 +18,17 @@ with lib;
     homebrew.casks = [
       # 3D Printing & CAD
       "creality-print"
-      "creality-slicer" 
+      "creality-slicer"
       "prusaslicer"
       "ultimaker-cura"
-      
+
       # Mathematical & Design Tools
       "geogebra"
       "macsvg"
-      
+
       # Additional design tools already in base homebrew
       # "inkscape" "gimp" are in base homebrew.nix
-      
+
       # Media editing
       "diffusionbee"
     ] ++ optionals (config.machine.hardware.gpu == "apple") [
@@ -42,11 +42,11 @@ with lib;
 
     # CAD-specific system optimizations
     system.defaults.NSGlobalDomain = {
-      "com.apple.mouse.tapBehavior" = 1;  # Better for precision work
+      "com.apple.mouse.tapBehavior" = 1; # Better for precision work
     };
 
     # More aggressive performance settings for CAD work
-    nix.settings.cores = mkDefault 0;  # Use all cores for builds
+    nix.settings.cores = mkDefault 0; # Use all cores for builds
     nix.settings.max-jobs = mkDefault "auto";
   };
 }
