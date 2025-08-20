@@ -4,7 +4,7 @@
   imports = [ ./shared.nix ];
 
   machine = {
-    roles = [ "developer" ];
+    roles = [ "personal" "developer" ];
     taints = [ ]; # No restrictions
     profile = "full";
     hardware = {
