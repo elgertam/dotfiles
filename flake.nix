@@ -17,6 +17,7 @@
   outputs = { self, darwin, home-manager, ... }@inputs:
     let
       inherit (darwin.lib) darwinSystem;
+      inherit (inputs.nixpkgs-unstable.lib) nixosSystem;
 
       nixpkgs = inputs.nixpkgs-unstable;
 
@@ -46,6 +47,28 @@
             }
           ];
         };
+
+      mkNixosSystem = { hostname, system }:
+        nixosSystem {
+          inherit system;
+          modules = [
+            # Host-specific configuration (includes shared.nix)
+            ./hosts/${hostname}.nix
+
+            # Set nixPath for compatibility
+            {
+              nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+            }
+
+            # Home manager integration
+            home-manager.nixosModules.home-manager
+            {
+              nixpkgs = nixpkgsConfig;
+              home-manager.useUserPackages = true;
+              home-manager.users.ame = import ./users/ame;
+            }
+          ];
+        };
     in
     {
       darwinConfigurations = {
@@ -65,10 +88,24 @@
         };
       };
 
+      nixosConfigurations = {
+        # Example Linux desktop configuration
+        linux-desktop = mkNixosSystem {
+          hostname = "linux-desktop";
+          system = "x86_64-linux";
+        };
+      };
+
       darwinPackages = self.darwinConfigurations.laforge.pkgs;
 
       darwinModules = {
         podman-darwin = import ./modules/podman-darwin.nix;
+      };
+
+      nixosModules = {
+        podman-linux = import ./modules/podman-linux.nix;
+        gnome-defaults = import ./modules/system/gnome-defaults.nix;
+        linux-packages = import ./modules/system/linux-packages.nix;
       };
 
       overlays = { };
