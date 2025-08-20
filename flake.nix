@@ -159,6 +159,38 @@
         dataDir = "/var/log/redis/data";
       };
 
+      services.podman = {
+        enable = true;
+
+        containers = {
+          # SQL Server
+          rms-sql = {
+            image = "mcr.microsoft.com/mssql/server:2022-latest";
+            ports = [ "1433:1433" ];
+            volumes = [
+              "rms-sqldata:/var/opt/mssql/data"
+              "/Users/ame/workspace/com.schoolcrossing/test-rig/backups:/var/opt/mssql/backups:ro"
+            ];
+            environment = {
+              ACCEPT_EULA = "Y";
+              SA_PASSWORD = "DevStore123!";
+            };
+            autoStart = true;
+          };
+
+          # Syndicate broker
+          syndicate-broker = {
+            image = "leastfixedpoint/syndicate-server";
+            ports = [ "8001:8001" "9001:9001" ];
+            volumes = [
+              "/Users/ame/workspace/org.syndicate-lang/syndicate-py/chat.server-config.pr:/config.pr:ro"
+            ];
+            cmd = [ "/syndicate-server" "-c" "/config.pr" ];
+            autoStart = true;
+          };
+        };
+      };
+
       launchd.user.agents = {
         postgresql.serviceConfig = {
           StandardErrorPath = "/var/log/postgres/postgres.error.log";
@@ -421,7 +453,9 @@
 
     darwinPackages = self.darwinConfigurations.laforge.pkgs;
 
-    darwinModules = { };
+    darwinModules = {
+      podman-darwin = import ./modules/podman-darwin.nix;
+    };
 
     overlays = { };
 
