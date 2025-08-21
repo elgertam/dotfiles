@@ -5,15 +5,15 @@
 
   machine = {
     roles = [ "personal" "developer" ];
-    taints = [ 
-      "no-containers"      # Older Mac may struggle with containers
-      "legacy-macos"       # Can't upgrade to newer macOS versions
+    taints = [
+      "no-containers" # Older Mac may struggle with containers
+      "legacy-macos" # Can't upgrade to newer macOS versions
     ];
-    profile = "standard";  # Not full due to older hardware
+    profile = "standard"; # Not full due to older hardware
     hardware = {
       arch = "x86_64";
-      gpu = "dedicated";     # Mac Pro has dedicated GPU
-      storage = "standard";  # Conservative estimate
+      gpu = "dedicated"; # Mac Pro has dedicated GPU
+      storage = "standard"; # Conservative estimate
     };
   };
 

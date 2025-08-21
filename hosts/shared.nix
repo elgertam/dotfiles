@@ -16,13 +16,13 @@
 
   # Shared configuration for all hosts
   environment.systemPackages = [ ];
-  
+
   # Make nix tools available to GUI applications
-  environment.systemPath = [ 
+  environment.systemPath = [
     "/nix/var/nix/profiles/default/bin"
     "/run/current-system/sw/bin"
   ];
-  
+
   # Create symlinks for tools that GUI apps expect in standard locations
   system.activationScripts.applications.text = ''
     # Create symlink for podman so GUI apps can find it (if it exists)

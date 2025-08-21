@@ -32,7 +32,7 @@ with lib;
 
       # Media editing (only on modern macOS)
     ] ++ optionals (!builtins.elem "legacy-macos" config.machine.taints) [
-      "diffusionbee"  # Requires newer macOS or Apple Silicon
+      "diffusionbee" # Requires newer macOS or Apple Silicon
     ] ++ optionals (config.machine.hardware.gpu == "apple") [
       # Apple Silicon optimized CAD tools
     ] ++ optionals (!builtins.elem "no-fusion360" config.machine.taints) [

@@ -7,7 +7,7 @@ with lib;
     homebrew.enable = true;
     homebrew.global.brewfile = true;
     homebrew.caskArgs.no_quarantine = true;
-    
+
     # Base applications for all machines
     homebrew.casks = [
       # Productivity & Utilities
