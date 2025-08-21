@@ -26,7 +26,7 @@
         overlays = builtins.attrValues self.overlays;
       };
 
-      mkDarwinSystem = { hostname, system }:
+      mkDarwinSystem = { hostname, system, username }:
         darwinSystem {
           inherit system;
           modules = [
@@ -43,7 +43,7 @@
             {
               nixpkgs = nixpkgsConfig;
               home-manager.useUserPackages = true;
-              home-manager.users.ame = import ./users/ame;
+              home-manager.users."${username}" = import ./users/andrew.elgert;
             }
           ];
         };
@@ -75,16 +75,25 @@
         laforge = mkDarwinSystem {
           hostname = "laforge";
           system = "x86_64-darwin";
+          username = "ame";
+        };
+        
+        "ROME" = mkDarwinSystem {
+          hostname = "ROME";
+          system = "x86_64-darwin";
+          username = "andrew.elgert";
         };
 
         spock = mkDarwinSystem {
           hostname = "spock";
           system = "aarch64-darwin";
+          username = "ame";
         };
 
         riker = mkDarwinSystem {
           hostname = "riker";
           system = "aarch64-darwin";
+          username = "ame";
         };
       };
 

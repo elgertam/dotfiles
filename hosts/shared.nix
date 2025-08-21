@@ -16,9 +16,9 @@
   # Shared configuration for all hosts
   environment.systemPackages = [ ];
 
-  system.primaryUser = "ame";
+  system.primaryUser = "andrew.elgert";
   system.stateVersion = 6;
 
   # Users configuration will be handled by home-manager
-  users.users.ame.home = "/Users/ame";
+  users.users."andrew.elgert".home = "/Users/andrew.elgert";
 }

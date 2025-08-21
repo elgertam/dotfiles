@@ -31,7 +31,7 @@ with lib;
       "zoom"
 
       # Office & Documents
-      "microsoft-office"
+#       "microsoft-office"
       "notion"
 
       # Media & Graphics
@@ -55,7 +55,7 @@ with lib;
       "jupyter-notebook-ql"
       "qlcolorcode"
       "quickgeojson"
-      "qlimagesize"
+      # "qlimagesize"
       "qlmarkdown"
       "qlmobi"
       "qlprettypatch"

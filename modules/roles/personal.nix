@@ -18,15 +18,15 @@ with lib;
       "anydesk"
       "basictex"
       "claude"
-      "macgpt"
+      # "macgpt"
       "macs-fan-control"
-      "protonvpn"
+      # "protonvpn"
       "tabula"
       "utm"
       "windows-app"
     ] ++ optionals (config.machine.profile != "minimal") [
       # Additional personal apps for standard/full profiles
-      "logi-options-plus"
+      # "logi-options-plus"
     ];
 
     # Personal-focused system settings
@@ -36,7 +36,7 @@ with lib;
     };
 
     # Lighter package set for personal use
-    home-manager.users.ame.home.packages = with pkgs;
+    home-manager.users."andrew.elgert".home.packages = with pkgs;
       # Essential tools only
       [ coreutils man git vim curl wget ]
       ++ optionals (config.machine.profile == "standard" || config.machine.profile == "full") [

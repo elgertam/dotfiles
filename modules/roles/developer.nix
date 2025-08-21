@@ -21,7 +21,7 @@ with lib;
       "microsoft-teams"
     ];
 
-    home-manager.users.ame.home.packages = with pkgs; [
+    home-manager.users."andrew.elgert".home.packages = with pkgs; [
       # Core development tools
       git
       jq
@@ -82,7 +82,7 @@ with lib;
             ports = [ "1433:1433" ];
             volumes = [
               "rms-sqldata:/var/opt/mssql/data"
-              "/Users/ame/workspace/com.schoolcrossing/test-rig/backups:/var/opt/mssql/backups:ro"
+              "/Users/andrew.elgert/workspace/com.schoolcrossing/test-rig/backups:/var/opt/mssql/backups:ro"
             ];
             environment = {
               ACCEPT_EULA = "Y";
@@ -96,7 +96,7 @@ with lib;
             image = "leastfixedpoint/syndicate-server";
             ports = [ "8001:8001" "9001:9001" ];
             volumes = [
-              "/Users/ame/workspace/org.syndicate-lang/syndicate-py/chat.server-config.pr:/config.pr:ro"
+              "/Users/andrew.elgert/workspace/org.syndicate-lang/syndicate-py/chat.server-config.pr:/config.pr:ro"
             ];
             cmd = [ "/syndicate-server" "-c" "/config.pr" ];
             autoStart = true;
