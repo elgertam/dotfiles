@@ -43,7 +43,7 @@
             {
               nixpkgs = nixpkgsConfig;
               home-manager.useUserPackages = true;
-              home-manager.users."${username}" = import ./users/andrew.elgert;
+              home-manager.users."${username}" = import ./users/${username};
             }
           ];
         };

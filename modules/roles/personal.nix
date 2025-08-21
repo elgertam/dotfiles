@@ -11,22 +11,27 @@ with lib;
       "selfcontrol"
 
       # Media & Entertainment
+      "minecraft"
       "pandora"
       "transmission"
 
       # Personal utilities
       "anydesk"
       "basictex"
-      "claude"
-      # "macgpt"
       "macs-fan-control"
-      # "protonvpn"
+      "signal"
+      "splashtop-business"
       "tabula"
+    ] ++ optionals (!builtins.elem "legacy-macos" config.machine.taints) [
+      # Modern apps that require newer macOS
+      "claude"
+      "macgpt"
+      "protonvpn"
       "utm"
       "windows-app"
     ] ++ optionals (config.machine.profile != "minimal") [
       # Additional personal apps for standard/full profiles
-      # "logi-options-plus"
+      "logi-options-plus"
     ];
 
     # Personal-focused system settings
@@ -36,7 +41,7 @@ with lib;
     };
 
     # Lighter package set for personal use
-    home-manager.users."andrew.elgert".home.packages = with pkgs;
+    home-manager.users."${config.system.primaryUser}".home.packages = with pkgs;
       # Essential tools only
       [ coreutils man git vim curl wget ]
       ++ optionals (config.machine.profile == "standard" || config.machine.profile == "full") [

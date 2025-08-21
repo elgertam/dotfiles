@@ -7,7 +7,7 @@ with lib;
     homebrew.enable = true;
     homebrew.global.brewfile = true;
     homebrew.caskArgs.no_quarantine = true;
-
+    
     # Base applications for all machines
     homebrew.casks = [
       # Productivity & Utilities
@@ -26,12 +26,14 @@ with lib;
       "microsoft-edge"
 
       # Communication
+      "discord"
       "messenger"
       "slack"
       "zoom"
 
       # Office & Documents
-#       "microsoft-office"
+      "adobe-acrobat-reader"
+      "microsoft-office"
       "notion"
 
       # Media & Graphics
@@ -53,9 +55,10 @@ with lib;
 
       # QuickLook Plugins
       "jupyter-notebook-ql"
+      "ql-ansilove"
       "qlcolorcode"
       "quickgeojson"
-      # "qlimagesize"
+      "qlimagesize"
       "qlmarkdown"
       "qlmobi"
       "qlprettypatch"

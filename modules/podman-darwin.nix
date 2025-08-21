@@ -225,7 +225,7 @@ in
           StandardErrorPath = "/tmp/podman-machine.log";
           EnvironmentVariables = {
             PATH = "/usr/local/bin:/usr/bin:/bin:/nix/var/nix/profiles/default/bin";
-            HOME = "/Users/andrew.elgert";
+            HOME = "/Users/${config.system.primaryUser}";
           };
         };
       };
@@ -263,7 +263,7 @@ in
             StandardErrorPath = "/tmp/podman-${name}.log";
             EnvironmentVariables = {
               PATH = "/usr/local/bin:/usr/bin:/bin:/nix/var/nix/profiles/default/bin";
-              HOME = "/Users/andrew.elgert";
+              HOME = "/Users/${config.system.primaryUser}";
             };
           };
         }

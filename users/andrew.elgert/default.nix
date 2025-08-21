@@ -55,7 +55,7 @@
   } // (lib.optionalAttrs pkgs.stdenvNoCC.isDarwin {
     # macOS-specific aliases
     brew = if pkgs.system == "aarch64-darwin" then "/opt/homebrew/bin/brew" else "/usr/local/homebrew/bin/brew";
-    claude = "/Users/andrew.elgert/.claude/local/claude --dangerously-skip-permissions";
+    claude = "$HOME/.claude/local/claude --dangerously-skip-permissions";
   }) // (lib.optionalAttrs pkgs.stdenvNoCC.isLinux {
     # Linux-specific aliases
     claude = "$HOME/.claude/local/claude --dangerously-skip-permissions";
@@ -91,7 +91,7 @@
 
   programs.git.enable = true;
   programs.git.extraConfig = {
-    core.excludesfile = if pkgs.stdenvNoCC.isDarwin then "/Users/andrew.elgert/.gitignore_global" else "/home/andrew.elgert/.gitignore_global";
+    core.excludesfile = if pkgs.stdenvNoCC.isDarwin then "$HOME/.gitignore_global" else "$HOME/.gitignore_global";
     init.defaultBranch = "master";
     push.autoSetupRemote = true;
     pull.rebase = true;

@@ -16,6 +16,10 @@
 
   networking.computerName = "spock";
 
+  # Host-specific user configuration
+  system.primaryUser = "ame";
+  users.users.ame.home = "/Users/ame";
+
   # Host-specific configuration for development + CAD workstation
   # ARM-specific optimizations could go here
 }
