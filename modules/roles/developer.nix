@@ -5,21 +5,31 @@ with lib;
 {
   config = mkIf (builtins.elem "developer" config.machine.roles) {
     homebrew.casks = [
-      "visual-studio-code"
-      "fork"
-      "postman"
-      "dbeaver-community"
       "dash"
       "db-browser-for-sqlite"
+      "dbeaver-community"
       "figma"
+      "fork"
       "kdiff3"
       "meld"
+      "postman"
+      "raspberry-pi-imager"
+      "silicon-labs-vcp-driver"
+      "visual-studio-code"
     ] ++ optionals (!builtins.elem "no-containers" config.machine.taints) [
       "docker-desktop"
       "podman-desktop"
     ] ++ optionals (!builtins.elem "no-microsoft" config.machine.taints) [
       "microsoft-teams"
     ];
+
+    homebrew.masApps = {
+      "Developer" = 640199958;
+      "Tailscale" = 1475387142;
+      "TestFlight" = 899247664;
+      "WireGuard" = 1451685025;
+      "Xcode" = 497799835;
+    };
 
     home-manager.users."${config.system.primaryUser}".home.packages = with pkgs; [
       # Core development tools

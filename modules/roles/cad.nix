@@ -17,8 +17,11 @@ with lib;
 
     homebrew.casks = [
       # 3D Printing & CAD
+      "autodesk-fusion"
+      "bambu-studio"
       "creality-print"
       "creality-slicer"
+      "freecad"
       "openscad"
       "prusaslicer"
       "ultimaker-cura"

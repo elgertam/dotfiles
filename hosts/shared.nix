@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   # Import all core modules
@@ -15,7 +15,9 @@
   ];
 
   # Shared configuration for all hosts
-  environment.systemPackages = [ ];
+  environment.systemPackages = with pkgs; [
+    terminal-notifier
+  ];
 
   # Make nix tools available to GUI applications
   environment.systemPath = [

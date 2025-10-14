@@ -14,6 +14,7 @@ with lib;
       "minecraft"
       "pandora"
       "transmission"
+      "vlc"
 
       # Personal utilities
       "anydesk"
@@ -22,6 +23,7 @@ with lib;
       "signal"
       "splashtop-business"
       "tabula"
+      "vuescan"
     ] ++ optionals (!builtins.elem "legacy-macos" config.machine.taints) [
       # Modern apps that require newer macOS
       "claude"
@@ -33,6 +35,19 @@ with lib;
       # Additional personal apps for standard/full profiles
       "logi-options-plus"
     ];
+
+    homebrew.masApps = {
+      "1Password for Safari" = 1569813296;
+      "Brother iPrint&Scan" = 1193539993;
+      "DaisyDisk" = 411643860;
+      "Flow" = 1423210932;
+      "GarageBand" = 682658836;
+      "iMovie" = 408981434;
+      "Keynote" = 409183694;
+      "Numbers" = 409203825;
+      "Pages" = 409201541;
+      "Prime Video" = 545519333;
+    };
 
     # Personal-focused system settings
     system.defaults.dock = {

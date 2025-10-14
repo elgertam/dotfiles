@@ -144,6 +144,10 @@
     }
 
     set -o vi
+
+    if which uv > /dev/null; then
+      eval "$(uv generate-shell-completion zsh)"
+    fi
   '';
 
   programs.zsh.envExtra = ''
