@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 
 with lib;
 
@@ -7,6 +7,14 @@ with lib;
     homebrew.enable = true;
     homebrew.global.brewfile = true;
     homebrew.caskArgs.no_quarantine = true;
+
+    # Custom tap for local cask definitions
+    homebrew.taps = [
+      {
+        name = "custom/tap";
+        clone_target = "file:///Users/${config.system.primaryUser}/.dotfiles/homebrew-tap";
+      }
+    ];
 
     # Base applications for all machines
     homebrew.casks = [

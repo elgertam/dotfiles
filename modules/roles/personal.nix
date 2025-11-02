@@ -8,6 +8,7 @@ with lib;
       # Personal productivity
       "anytype"
       "dropbox"
+      "quickbooks-online"
       "selfcontrol"
 
       # Media & Entertainment
