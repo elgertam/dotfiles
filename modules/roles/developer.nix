@@ -5,6 +5,7 @@ with lib;
 {
   config = mkIf (builtins.elem "developer" config.machine.roles) {
     homebrew.casks = [
+      "android-studio"
       "dash"
       "db-browser-for-sqlite"
       "dbeaver-community"

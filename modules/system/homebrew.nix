@@ -22,6 +22,7 @@ with lib;
       "1password"
       "appcleaner"
       "bartender"
+      "jordanbaird-ice"
       "keepingyouawake"
       "keka"
       "stats"

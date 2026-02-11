@@ -26,6 +26,10 @@ with lib;
       "prusaslicer"
       "ultimaker-cura"
 
+      # Lego
+      "bricklink-studio"
+      "bricklink-partdesigner"
+
       # Mathematical & Design Tools
       "geogebra"
       "macsvg"

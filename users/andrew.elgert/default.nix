@@ -55,7 +55,7 @@
   } // (lib.optionalAttrs pkgs.stdenvNoCC.isDarwin {
     # macOS-specific aliases
     brew = if pkgs.system == "aarch64-darwin" then "/opt/homebrew/bin/brew" else "/usr/local/homebrew/bin/brew";
-    claude = "$HOME/.claude/local/claude --dangerously-skip-permissions";
+    claude = "$HOME/.local/bin/claude --dangerously-skip-permissions";
   }) // (lib.optionalAttrs pkgs.stdenvNoCC.isLinux {
     # Linux-specific aliases
     claude = "$HOME/.claude/local/claude --dangerously-skip-permissions";

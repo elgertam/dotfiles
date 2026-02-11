@@ -14,6 +14,7 @@ with lib;
       # Media & Entertainment
       "minecraft"
       "pandora"
+      "steam"
       "transmission"
       "vlc"
 
