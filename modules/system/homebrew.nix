@@ -20,6 +20,7 @@ with lib;
     homebrew.casks = [
       # Productivity & Utilities
       "1password"
+      "adobe-acrobat-reader"
       "appcleaner"
       "bartender"
       "thaw"
