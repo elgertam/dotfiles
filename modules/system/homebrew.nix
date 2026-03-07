@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -32,8 +32,6 @@ with lib;
       "zoom"
 
       # Office & Documents
-      "adobe-acrobat-reader"
-      "microsoft-office"
       "notion"
 
       # Media & Graphics
@@ -55,10 +53,8 @@ with lib;
 
       # QuickLook Plugins
       "jupyter-notebook-ql"
-      "ql-ansilove"
       "qlcolorcode"
       "quickgeojson"
-      "qlimagesize"
       "qlmarkdown"
       "qlmobi"
       "qlprettypatch"
@@ -73,6 +69,9 @@ with lib;
       # System Tools
       "hammerspoon"
       "xquartz"
+    ] ++ optionals (!builtins.elem "legacy-macos" config.machine.taints) [
+      "adobe-acrobat-reader"
+      "microsoft-office"
     ] ++ (
       # Architecture-specific applications
       if (pkgs.system == "aarch64-darwin") then [

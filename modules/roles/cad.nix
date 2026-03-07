@@ -17,6 +17,7 @@ with lib;
 
     homebrew.casks = [
       # 3D Printing & CAD
+      "bambu-studio"
       "creality-print"
       "creality-slicer"
       "openscad"

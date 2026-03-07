@@ -31,7 +31,7 @@ with lib;
       "windows-app"
     ] ++ optionals (config.machine.profile != "minimal") [
       # Additional personal apps for standard/full profiles
-      "logi-options-plus"
+      "logi-options+"
     ];
 
     # Personal-focused system settings

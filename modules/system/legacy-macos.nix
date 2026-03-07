@@ -10,22 +10,11 @@ with lib;
       ApplePressAndHoldEnabled = mkForce true;
     };
 
-    # Override to exclude packages that don't work on legacy macOS
-    # This will filter the final cask list from all modules
-    homebrew.casks = mkForce (
-      builtins.filter
-        (pkg: !(builtins.elem pkg [
-          "microsoft-office" # Requires newer macOS
-          "chatgpt" # Requires newer macOS
-          # "claude"            # May require newer macOS
-          "diffusionbee" # Requires Apple Silicon or newer macOS
-          # "utm"               # May have issues on older Intel Macs
-          # "windows-app"       # Microsoft's newer virtualization
-          "macgpt" # Likely requires newer macOS
-          "protonvpn" # May require newer macOS features
-        ]))
-        config.homebrew.casks
-    );
+    # Legacy-incompatible packages are excluded at the source:
+    # - personal.nix excludes claude, macgpt, protonvpn, utm, windows-app
+    # - cad.nix excludes diffusionbee
+    # - homebrew.nix excludes microsoft-office (below)
+    # - chatgpt is only added on aarch64-darwin
 
     # Use older nixpkgs for better compatibility
     nixpkgs.config = {

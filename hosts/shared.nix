@@ -26,8 +26,9 @@
   # Create symlinks for tools that GUI apps expect in standard locations
   system.activationScripts.applications.text = ''
     # Create symlink for podman so GUI apps can find it (if it exists)
-    podman_path="$(readlink -f /etc/profiles/per-user/*/bin/podman 2>/dev/null | head -1)"
-    if [ -n "$podman_path" ] && [ -f "$podman_path" ]; then
+    podman_bin="$(echo /etc/profiles/per-user/*/bin/podman)"
+    if [ -e "$podman_bin" ]; then
+      podman_path="$(readlink "$podman_bin" 2>/dev/null || echo "$podman_bin")"
       mkdir -p /usr/local/bin
       ln -sf "$podman_path" /usr/local/bin/podman
     fi
