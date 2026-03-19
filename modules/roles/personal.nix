@@ -22,6 +22,7 @@ with lib;
       "anydesk"
       "basictex"
       "macs-fan-control"
+      "openrocket"
       "signal"
       "splashtop-business"
       "tabula"
